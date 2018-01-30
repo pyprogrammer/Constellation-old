@@ -1,8 +1,7 @@
 package graphutils
 
-import core.Argument
-
 import scalax.collection.Graph
+import scalax.collection.edge.LkDiEdge
 
 case class MatchState(fullToFrag: Map[Int, Int], fragToFull: Map[Int, Int], size: Int) {
 
@@ -16,11 +15,11 @@ case class MatchState(fullToFrag: Map[Int, Int], fragToFull: Map[Int, Int], size
 }
 
 // A variant of the VF2 Algorithm, with node type matching.
-class GraphMatcher(val full: Graph[Int, Argument],
-                   val fragment: Graph[Int, Argument],
-                   val fragmentSize: Int,
-                  // TypeChecks between full node id and fragment node id
-                   val typeChecker: (Int, Int) => Boolean
+class GraphMatcher[T](val full: Graph[Int, LkDiEdge],
+                      val fragment: Graph[Int, LkDiEdge],
+                      val fragmentSize: Int,
+                      // TypeChecks between full node id and fragment node id
+                      val typeChecker: (Int, Int) => Boolean
                   ) {
   def findMatches(state: MatchState = MatchState(Map.empty[Int, Int],
     Map.empty[Int, Int], 0)): Iterable[MatchState] = {
@@ -75,7 +74,7 @@ class GraphMatcher(val full: Graph[Int, Argument],
   }
 
   private def edgeSetMatches(fullEdges: Set[full.EdgeT], fragEdges: Set[fragment.EdgeT]): Boolean = {
-    fullEdges.map {_.data} == fragEdges.map {_.data}
+    fullEdges.map {_.label} == fragEdges.map {_.label}
   }
 
   private def feasibilityRPred(state: MatchState,
@@ -214,7 +213,7 @@ class GraphMatcher(val full: Graph[Int, Argument],
     criteria.forall(_(state, fullInternalNode, fragInternalNode))
   }
 
-  private def outTerminalSet(nodes: Iterable[Int], graph: Graph[Int, Argument]): Set[Int] = {
+  private def outTerminalSet(nodes: Iterable[Int], graph: Graph[Int, LkDiEdge]): Set[Int] = {
     nodes.map {
       key => (graph get key).diSuccessors.map {
         _.value
@@ -224,7 +223,7 @@ class GraphMatcher(val full: Graph[Int, Argument],
     } -- nodes
   }
 
-  private def inTerminalSet(nodes: Iterable[Int], graph: Graph[Int, Argument]): Set[Int] = {
+  private def inTerminalSet(nodes: Iterable[Int], graph: Graph[Int, LkDiEdge]): Set[Int] = {
     nodes.map {
       key => (graph get key).diPredecessors.map {
         _.value
@@ -234,7 +233,7 @@ class GraphMatcher(val full: Graph[Int, Argument],
     } -- nodes
   }
 
-  private def terminalSet (nodes: Iterable[Int], graph: Graph[Int, Argument]): Set[Int] = {
+  private def terminalSet (nodes: Iterable[Int], graph: Graph[Int, LkDiEdge]): Set[Int] = {
     outTerminalSet(nodes, graph) union inTerminalSet(nodes, graph)
   }
 }
