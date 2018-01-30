@@ -91,7 +91,7 @@ class GraphMatcher[T](val full: Graph[Int, LkDiEdge],
         val fullEdges = fullInternalNode.incomingFrom(fullPred)
         val fragEdges = fragInternalNode.incomingFrom(fragPred)
 
-        if (fullEdges.size != fragEdges.size) { return false }
+        if (fullEdges != fragEdges) { return false }
       }
     }
 
@@ -104,7 +104,7 @@ class GraphMatcher[T](val full: Graph[Int, LkDiEdge],
         val fullPred = full get state.fragToFull(fragPred.value)
         val fragEdges = fragInternalNode.incomingFrom(fragPred)
         val fullEdges = fullInternalNode.incomingFrom(fullPred)
-        if (fullEdges.size != fragEdges.size) { return false }
+        if (fullEdges != fragEdges) { return false }
       }
     })
     true
@@ -123,7 +123,7 @@ class GraphMatcher[T](val full: Graph[Int, LkDiEdge],
         val fullEdges = fullInternalNode.outgoingTo(fullSucc)
         val fragEdges = fragInternalNode.outgoingTo(fragSucc)
 
-        if (fullEdges.size != fragEdges.size) { return false }
+        if (fullEdges != fragEdges) { return false }
       }
     }
 
@@ -137,7 +137,7 @@ class GraphMatcher[T](val full: Graph[Int, LkDiEdge],
         val fragEdges = fragInternalNode.outgoingTo(fragSucc)
         val fullEdges = fullInternalNode.outgoingTo(fullSucc)
 
-        if (fullEdges.size != fragEdges.size) { return false }
+        if (fullEdges != fragEdges) { return false }
       }
     })
 

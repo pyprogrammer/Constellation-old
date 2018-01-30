@@ -24,5 +24,6 @@ class MatcherTest extends FunSuite {
     val matcher = new GraphMatcher(graph, graph, graph.order, (_, _) => true)
     val matches = matcher.findMatches()
     assert(matches.forall(_.size == graph.order))
+    assert(matches.size == 1)
   }
 }
