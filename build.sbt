@@ -7,7 +7,7 @@ scalaVersion := "2.12.4"
 
 libraryDependencies ++= Seq(
   "com.spotify" %% "scio-core" % "0.4.6",
-  "com.spotify" %% "scio-test" % "0.4.6" % "test",
+  "com.spotify" %% "scio-test" % "0.4.6",
   "com.spotify" %% "scio-extra" % "0.4.6",
   "org.apache.beam" % "beam-runners-direct-java" % "2.2.0",
 )
@@ -31,6 +31,7 @@ libraryDependencies  ++= Seq(
 resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
 
 libraryDependencies += "org.scala-graph" %% "graph-core" % "1.12.3"
+libraryDependencies += "org.scala-graph" %% "graph-dot" % "1.12.1"
 
 
-libraryDependencies += "org.scalatest" % "scalatest_2.12" % "3.0.4" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.12" % "3.0.4"

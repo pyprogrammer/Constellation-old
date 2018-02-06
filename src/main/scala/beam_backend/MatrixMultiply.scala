@@ -1,4 +1,5 @@
-package test
+package beam_backend
+
 
 import breeze.linalg.{DenseMatrix, pinv}
 import com.spotify.scio._
@@ -29,3 +30,4 @@ object MatrixMultiply extends App {
     sc.close()
   }
 }
+

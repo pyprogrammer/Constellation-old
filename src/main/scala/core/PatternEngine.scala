@@ -1,11 +1,10 @@
 package core
 
-import scala.collection.mutable
 import scalax.collection.mutable.Graph
 import scalax.collection.GraphPredef._, scalax.collection.GraphEdge._
-import scalax.collection.edge.Implicits._
 
 class PatternEngine {
+  // specialized -> generalized
   private val generalizationGraph = Graph[Pattern[_], DiEdge]()
 
   def isSpecialization(child: Pattern[_], parent: Pattern[_]) : Boolean = {
