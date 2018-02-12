@@ -67,7 +67,6 @@ object BeamBackend extends Backend[Pipeline]{
 
 
     private def addNodeToGraph(node: TransformHierarchy#Node): Unit = {
-
       val nodeId = getNewId()
       var outputCnt = 0
       node.getOutputs.values().forEach {
@@ -93,7 +92,6 @@ object BeamBackend extends Backend[Pipeline]{
           if (!(outputMapping contains tag)) {
             println(f"Missing tag: $tag")
           }
-          //          val (sourceNode, sourceId) = outputMapping(tag)
           outputMapping(tag).foreach {
             d => {
               val (sourceNode, sourceId) = d
@@ -208,6 +206,7 @@ object BeamBackend extends Backend[Pipeline]{
   override def extract(domainGraph: Pipeline): ProgramGraph[ParameterizedPattern[_]] = {
     val traverser = new Traverser
     domainGraph.traverseTopologically(traverser)
+    println(traverser.programGraph.dumpDot())
     traverser.programGraph
   }
 
