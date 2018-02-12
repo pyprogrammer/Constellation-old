@@ -16,9 +16,7 @@ object VectorNorm extends App {
     val (sc, arg) = ContextAndArgs(args)
 
     val p1 = sc.parallelize(a.toScalaVector())
-    val p2 = p1.map {
-      scala.math.pow(_, 2)
-    }
+    val p2 = p1.map { x => x * x }
     val p3 = p2.fold(0) {
       _ + _
     }
@@ -28,8 +26,6 @@ object VectorNorm extends App {
     p4.saveAsTextFile("output", "txt")
     BeamBackend.extract(sc.pipeline)
     sc.close()
-
-
   }
 }
 

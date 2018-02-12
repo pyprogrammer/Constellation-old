@@ -26,7 +26,7 @@ object MatrixMultiply extends App {
     sc.parallelize(blockedA).cross(isb).map {
       d => ((d._1._1, d._2._1), d._1._2 * d._2._2)
     }.aggregate(Map[(Int, Int), DenseMatrix[Double]]())((m, d) => m + d, (m1, m2) => {m1 ++ m2}).saveAsTextFile("output")
-
+    val graph = BeamBackend.extract(sc.pipeline)
     sc.close()
   }
 }
