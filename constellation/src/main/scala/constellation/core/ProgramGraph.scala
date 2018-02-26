@@ -1,4 +1,4 @@
-package core
+package constellation.core
 
 import scala.collection.mutable
 import scalax.collection.edge.LkDiEdge

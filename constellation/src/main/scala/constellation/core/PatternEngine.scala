@@ -1,4 +1,4 @@
-package core
+package constellation.core
 
 import scalax.collection.mutable.Graph
 import scalax.collection.GraphPredef._, scalax.collection.GraphEdge._

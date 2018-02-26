@@ -1,18 +1,20 @@
-package core
+package constellation.core
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
 
-class Pattern[ParameterType] protected (val name: String) {
+abstract class Pattern[ParameterType] (val name: String, val implements: Seq[Pattern[_]]) {
   val implementations: mutable.Set[Implementation[ParameterType]] = new mutable.HashSet[Implementation[ParameterType]]
   type PType = ParameterType
+
+  override def toString: String = s"Pattern<$name>"
 }
 
 object Pattern {
   private val patterns = mutable.Map[String, Pattern[_]]()
   private val validators = mutable.Map[String, mutable.HashSet[_ => Boolean]]()
 
-  def getInstance[T: ClassTag](name: String): Pattern[T] = {
+  def apply[T: ClassTag](name: String): Pattern[T] = {
     if (patterns contains name) {
       val pattern = patterns(name)
       pattern.asInstanceOf[Pattern[T]]
@@ -45,4 +47,8 @@ class ParameterizedPattern[ParameterType](val pattern: Pattern[ParameterType], v
     _.asInstanceOf[ParameterType => Boolean](parameter)
   }
   if (!passes) throw new IllegalArgumentException(f"$parameter does not satisfy validators for $pattern.")
+
+  override def toString: String = {
+    s"$pattern[$parameter]"
+  }
 }

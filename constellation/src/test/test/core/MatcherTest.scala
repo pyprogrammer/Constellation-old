@@ -1,6 +1,6 @@
-package core
+package constellation.core
 
-import graphutils.GraphMatcher
+import constellation.graphutils.GraphMatcher
 import org.scalatest._
 
 import scalax.collection.edge.LkDiEdge

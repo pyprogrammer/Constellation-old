@@ -1,6 +1,8 @@
-package core
+package constellation.core
 
-trait Backend[T] {
+import com.typesafe.scalalogging.LazyLogging
+
+trait Backend[T] extends LazyLogging {
   val patterns: Iterable[Pattern[_]]
   val name: String
 

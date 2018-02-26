@@ -1,4 +1,4 @@
-package core
+package constellation.core
 
 import scalax.collection.Graph
 import scalax.collection.edge.LkDiEdge

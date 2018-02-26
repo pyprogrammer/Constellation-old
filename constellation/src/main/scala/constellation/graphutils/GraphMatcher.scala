@@ -1,4 +1,4 @@
-package graphutils
+package constellation.graphutils
 
 import scalax.collection.Graph
 import scalax.collection.edge.LkDiEdge
