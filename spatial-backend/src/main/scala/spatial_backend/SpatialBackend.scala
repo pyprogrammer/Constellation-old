@@ -162,7 +162,7 @@ object SpatialBackend extends Backend[(State, argon.core.Block[_])]{
     toolbox.eval(tree).asInstanceOf[(State,argon.core.Block[_])]
   }
 
-  def execute[U](sb: (State, argon.core.Block[_])): U = {
+  def execute(sb: (State, argon.core.Block[_])): Unit = {
     val (s, b) = sb
     val compiler = new SpatialCompiler {
       override def stagingArgs: Array[String] = Array.empty
