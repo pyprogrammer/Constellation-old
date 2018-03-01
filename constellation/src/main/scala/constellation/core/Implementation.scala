@@ -9,12 +9,12 @@ class Implementation[ParameterType] (
                                       val skeleton: ProgramGraph[Pattern[_]],
 
                                     // Given an isomorphism and the graph, find the parameters
-                                     val lifter: (ProgramGraph[ParameterizedPattern[_]], Map[Int, Int]) => ParameterType
+                                     val lifter: (ProgramGraph[Pattern[_]], Map[Int, Int]) => ParameterType
                                     ) {
 
   pattern.implementations.add(this)
 
-  def lift(programGraph: ProgramGraph[ParameterizedPattern[_]], iso: Map[Int, Int]):
+  def lift(programGraph: ProgramGraph[Pattern[_]], iso: Map[Int, Int]):
   ParameterizedImplementation[ParameterType] = {
     new ParameterizedImplementation[ParameterType](this, lifter(programGraph, iso))
   }

@@ -6,10 +6,10 @@ import scalax.collection.mutable.{Graph => mutableGraph}
 import scalax.collection.Graph
 import scalax.collection.io.dot._
 
-class ProgramGraph[T] {
-  val innerGraph: mutableGraph[Int, LkDiEdge] = mutableGraph[Int, LkDiEdge]()
-  val idMap: mutable.Map[Int, T] = mutable.Map[Int, T]()
-  val labelMap: mutable.Map[Int, String] = mutable.Map[Int, String]()
+class ProgramGraph[T](val innerGraph: mutableGraph[Int, LkDiEdge] = mutableGraph[Int, LkDiEdge](),
+                      val idMap: mutable.Map[Int, T] = mutable.Map[Int, T](),
+                      val labelMap: mutable.Map[Int, String] = mutable.Map[Int, String]()) {
+
 
   private val root = DotRootGraph(directed = true, id = Some(Id("ProgramGraph")))
 

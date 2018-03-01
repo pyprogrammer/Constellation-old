@@ -70,10 +70,10 @@ lazy val patterns = (project in file("patterns"))
   .settings(commonSettings).dependsOn(constellation)
 
 lazy val beambackend = (project in file("beam-backend"))
-  .settings(beamSettings).dependsOn(constellation)
+  .settings(beamSettings).dependsOn(constellation, patterns)
 
 lazy val spatialbackend = (project in file("spatial-backend"))
-  .settings(commonSettings).dependsOn(constellation, spatial)
+  .settings(commonSettings).dependsOn(constellation, spatial, patterns)
 
 lazy val constellationapps = (project in file("constellation-apps"))
     .settings(commonSettings).dependsOn(constellation, spatialbackend, beambackend)

@@ -1,54 +1,35 @@
 package constellation.core
 
 import scala.collection.mutable
-import scala.reflect.ClassTag
+import scala.reflect.runtime.universe
+import scala.reflect.runtime.universe.{TypeTag, typeTag}
 
-abstract class Pattern[ParameterType] (val name: String, val implements: Seq[Pattern[_]]) {
+trait Pattern[ParameterType] {
+  val name: String = ""
   val implementations: mutable.Set[Implementation[ParameterType]] = new mutable.HashSet[Implementation[ParameterType]]
-  type PType = ParameterType
 
-  override def toString: String = s"Pattern<$name>"
-}
+  val defaultTTs = Seq.empty[TypeTag[_]]
 
-object Pattern {
-  private val patterns = mutable.Map[String, Pattern[_]]()
-  private val validators = mutable.Map[String, mutable.HashSet[_ => Boolean]]()
+  override def toString: String = s"$name[$tt]($parameter)"
 
-  def apply[T: ClassTag](name: String): Pattern[T] = {
-    if (patterns contains name) {
-      val pattern = patterns(name)
-      pattern.asInstanceOf[Pattern[T]]
-      return pattern.asInstanceOf[Pattern[T]]
-    }
-    val pattern = new Pattern[T](name)
-    patterns(name) = pattern
-    pattern
-  }
+  val parameter: ParameterType
 
-  def registerValidator[T](name: String, validator: T => Boolean): Unit = {
-    if (!(validators contains name)) {
-      validators(name) = mutable.HashSet[_ => Boolean]()
-    }
+  val tt: Seq[TypeTag[_]]
 
-    validators(name) += validator
-  }
+  val inputTypes: Seq[TypeTag[_]]
+  val outputTypes: Seq[TypeTag[_]]
 
-  def getValidators(name: String): Seq[_ => Boolean] = {
-    if (validators contains name) {
-      return validators(name).toSeq
-    }
-    Seq.empty
+  def unapply(arg: Pattern[ParameterType]): Option[ParameterType] = {
+    Some(parameter)
   }
 }
 
-class ParameterizedPattern[ParameterType](val pattern: Pattern[ParameterType], val parameter: ParameterType) {
-  private val validators = Pattern.getValidators(pattern.name)
-  private val passes = validators.forall {
-    _.asInstanceOf[ParameterType => Boolean](parameter)
-  }
-  if (!passes) throw new IllegalArgumentException(f"$parameter does not satisfy validators for $pattern.")
-
-  override def toString: String = {
-    s"$pattern[$parameter]"
-  }
+trait Nop extends Pattern[Unit] {
+  override val name: String = "Nop"
+  override val tt = defaultTTs
+  override val parameter: Unit = ()
+  override val inputTypes: Seq[universe.TypeTag[_]] = Seq(universe.typeTag[Any])
+  override val outputTypes: Seq[universe.TypeTag[_]] = Seq(universe.typeTag[Any])
 }
+
+
