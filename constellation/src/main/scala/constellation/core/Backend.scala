@@ -14,7 +14,7 @@ abstract class Backend[T: TypeTag] extends LazyLogging {
   def extract(domainGraph: T): ProgramGraph[Pattern[_]]
   def implement(programGraph: ProgramGraph[Pattern[_]]): T
 
-  def execute[U](data: T): U
+  def execute(data: T): Unit
 }
 
 object Backend {

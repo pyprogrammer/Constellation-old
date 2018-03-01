@@ -221,5 +221,5 @@ object BeamBackend extends Backend[Pipeline] {
     // TODO
   }
 
-  override def execute[U](data: Pipeline): U = ???
+  override def execute(data: Pipeline): Unit = ???
 }

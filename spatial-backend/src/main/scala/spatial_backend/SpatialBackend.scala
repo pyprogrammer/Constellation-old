@@ -187,8 +187,5 @@ object SpatialBackend extends Backend[(State, argon.core.Block[_])]{
     }
 
     compiler.compile(Array.empty)
-
-    val result = 0
-    result.asInstanceOf[U]
   }
 }
