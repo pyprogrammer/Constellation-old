@@ -31,6 +31,6 @@ object VectorNorm extends App {
   val graph = BeamBackend.extract(sc.pipeline)
 
   val state = SpatialBackend.implement(graph)
-  SpatialBackend.execute[Any](state)
+  SpatialBackend.execute(state)
 }
 

@@ -197,7 +197,7 @@ object BeamBackend extends Backend[Pipeline] {
           val prefix = typeUtils.getAttribute[ValueProvider[ResourceId]](tio, Seq("inner", "filenamePrefix"))
           val suffix = typeUtils.getAttribute[String](tio, Seq("inner", "filenameSuffix"))
           return new Output {override val tt = Seq()
-            override val parameter: (String, String) = (prefix.get.getCurrentDirectory.getFilename, suffix)
+            override val parameter: (String, String) = (prefix.get.toString, suffix)
             override val outputTypes: Seq[universe.TypeTag[_]] = defaultTTs
             override val inputTypes: Seq[universe.TypeTag[_]] = Seq(typeTag[Any])
           }

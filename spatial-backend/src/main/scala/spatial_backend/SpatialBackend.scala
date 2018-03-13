@@ -13,6 +13,8 @@ import scala.tools.reflect.ToolBox
 import scala.reflect.{ClassTag, classTag}
 import scala.language.reflectiveCalls
 
+import sys.process._
+
 object SpatialBackend extends Backend[(State, argon.core.Block[_])]{
   override val patterns: Iterable[ClassTag[_]] = Seq(
     classTag[core.Zip], classTag[core.Map], classTag[core.Aggregate], classTag[core.Root], classTag[core.Output])
@@ -187,5 +189,11 @@ object SpatialBackend extends Backend[(State, argon.core.Block[_])]{
     }
 
     compiler.compile(Array.empty)
+
+    println(s.config.genDir)
+
+    val cwd = new java.io.File(s.config.genDir)
+    val runCommand = Process(s"make", cwd) #&& Process(s"bash run.sh", cwd)
+    val status = runCommand.!
   }
 }
